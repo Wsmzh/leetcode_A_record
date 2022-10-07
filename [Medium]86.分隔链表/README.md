@@ -87,14 +87,14 @@ impl Solution {
         let mut p = head;
 
         // 遍历
-        while let Some(mut nd) = p {
-            p = nd.next.take();
+        while let Some(mut node) = p {
+            p = node.next.take();
             
-            if nd.val < x {
-                ptr1.next = Some(nd);
+            if node.val < x {
+                ptr1.next = Some(node);
                 ptr1 = ptr1.next.as_mut().unwrap();
             } else {
-                ptr2.next = Some(nd);
+                ptr2.next = Some(node);
                 ptr2 = ptr2.next.as_mut().unwrap();
             }
         }
