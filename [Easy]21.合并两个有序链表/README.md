@@ -108,5 +108,4 @@ impl Solution {
         sentinel.next
     }
 }
-
 ```
