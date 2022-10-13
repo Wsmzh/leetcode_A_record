@@ -25,3 +25,25 @@ class Solution {
     }
 }
 ```
+
+## Rust
+```Rust
+impl Solution {
+    pub fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {
+        // 使用快慢指针技巧
+        let mut slow = 0;
+        let mut fast = 0;
+
+        // fast在前遍历直到数组末尾
+        while fast < nums.len() {
+            if nums[fast] != nums[slow] {
+                slow += 1;
+                nums[slow] = nums[fast];
+            }
+            fast += 1;
+        }
+        let res = slow + 1;
+        return res as i32;
+    }
+}
+```
