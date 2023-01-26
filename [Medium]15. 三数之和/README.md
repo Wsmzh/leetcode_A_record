@@ -4,6 +4,64 @@
 
 ```Java
 class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        // 数组排序
+        Arrays.sort(nums);
+
+        // 声明结果数组
+        List<List<Integer>> res = new ArrayList<>();
+
+        // 选定第一个数
+        for(int i = 0 ; i < nums.length ; i ++) {
+            int cur = nums[i];
+            int target = - cur;
+            List<List<Integer>> subList = twoSum(nums, i + 1, target);
+            for(List<Integer> subEle : subList) {
+                subEle.add(nums[i]);
+                res.add(new ArrayList<>(subEle));
+            }
+            // 跳过所有重复的第一个数
+            while(i < nums.length - 1 && nums[i + 1] == cur) {
+                i++;
+            }
+        }
+        return res;
+    }
+
+    private List<List<Integer>> twoSum(int[] nums, int start, int target) {
+        List<List<Integer>> subres = new ArrayList<>();
+        int left = start;
+        int right = nums.length - 1;
+        while(left < right) {
+            int sum = nums[left] + nums[right];
+            if (sum < target) {
+                left ++;
+            } else if (sum > target) {
+                right --;
+            } else {
+                int curLeft = nums[left];
+                int curRight = nums[right];
+                List<Integer> subList = new ArrayList<>();
+                subList.add(curLeft);
+                subList.add(curRight);
+                subres.add(subList);
+                while(left < right && nums[left] == curLeft) {
+                    left ++;
+                }
+                while(right > left && nums[right] == curRight) {
+                    right --;
+                }
+            }
+        }
+        return subres;
+    }
+}
+```
+
+## C++
+
+```C++
+class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
         // 数组排序
