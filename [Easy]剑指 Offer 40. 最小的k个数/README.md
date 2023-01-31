@@ -39,7 +39,7 @@ class Solution {
                     continue ;
                 }
             }
-            // 如果小于k，则插入pq上浮
+            // 如果小于等于k，则插入pq上浮
             else {
                 pq[i + 1] = arr[i];
                 // 上浮
