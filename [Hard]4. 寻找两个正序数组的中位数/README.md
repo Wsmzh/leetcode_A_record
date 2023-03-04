@@ -5,19 +5,27 @@
 ```Java
 class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        // 得到2个数组的长度
         int length1 = nums1.length, length2 = nums2.length;
+        // 总长度
         int totalLength = length1 + length2;
+        // 总长度分奇偶数
         if (totalLength % 2 == 1) {
+            // 如果是奇数
             int midIndex = totalLength / 2;
+            // 调用函数，get第mid + 1小的元素
             double median = getKthElement(nums1, nums2, midIndex + 1);
             return median;
         } else {
+            // 如果是偶数,中间两个数分别是 /2-1 和 /2
             int midIndex1 = totalLength / 2 - 1, midIndex2 = totalLength / 2;
+            // 调用函数，get第mid1 + 1小和第mid2 + 1小的元素
             double median = (getKthElement(nums1, nums2, midIndex1 + 1) + getKthElement(nums1, nums2, midIndex2 + 1)) / 2.0;
             return median;
         }
     }
 
+    // get第k小的元素
     public int getKthElement(int[] nums1, int[] nums2, int k) {
         /* 主要思路：要找到第 k (k>1) 小的元素，那么就取 pivot1 = nums1[k/2-1] 和 pivot2 = nums2[k/2-1] 进行比较
          * 这里的 "/" 表示整除
