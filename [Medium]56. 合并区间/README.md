@@ -2,6 +2,62 @@
 
 ## Java
 
+## 自己新写
+
+```Java
+class Solution {
+    public int[][] merge(int[][] intervals) {
+        // 按起点升序排序，终点降序排序
+        Arrays.sort(intervals, (a, b) -> {
+            if(a[0] == b[0]) {
+                return b[1] - a[1];
+            }
+            return a[0] - b[0];
+        });
+
+        List<Integer[]> list = new ArrayList<>();
+        int left = intervals[0][0];
+        int right = intervals[0][1];
+
+        for(int i = 1 ; i < intervals.length ; i ++) {
+            int[] intv = intervals[i];
+            // 三种情况
+            // 1.覆盖
+            if(left <= intv[0] && right >= intv[1]) {
+                continue;
+            }
+            // 2.相交
+            if(intv[0] <= right && right <= intv[1]) {
+                right = intv[1];
+                continue;
+            }
+            // 3.不相交
+            if(right < intv[0]) {
+                // 记录
+                Integer[] newIntv =new Integer[2];
+                newIntv[0] = left;
+                newIntv[1] = right;
+                list.add(newIntv);
+                // 更新
+                left = intv[0];
+                right = intv[1];
+            }
+        }
+        Integer[] newIntv =new Integer[2];
+        newIntv[0] = left;
+        newIntv[1] = right;
+        list.add(newIntv);
+
+        int[][] res = new int[list.size()][2];
+        for(int i = 0 ; i < list.size() ; i ++) {
+            res[i][0] = list.get(i)[0];
+            res[i][1] = list.get(i)[1];
+        }
+        return res;
+    }
+}
+```
+
 [//]: # (支持粘贴图片啦🎉🎉🎉)
 [//]: # (保存的笔记可以在 CodeTop 微信小程序中查看)
 ## 解法1

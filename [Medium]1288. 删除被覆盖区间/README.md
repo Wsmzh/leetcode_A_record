@@ -5,7 +5,7 @@
 ```Java
 class Solution {
     public int removeCoveredIntervals(int[][] intervals) {
-        // 按照起点升序，终点降序的规则排序
+        // 先按照起点升序，终点降序进行sort
         Arrays.sort(intervals, (a, b) -> {
             if(a[0] == b[0]) {
                 return b[1] - a[1];
@@ -13,28 +13,30 @@ class Solution {
             return a[0] - b[0];
         });
 
-        // 左右边界
-        int left = intervals[0][0];
-        int right = intervals[0][1];
-        // 记录被覆盖的区间数
+        // 记录被覆盖的区间个数
         int count = 0;
 
-        // 从第二个区间开始遍历，判断是否被覆盖了
+        // 覆盖区间的起点终点
+        int left = intervals[0][0];
+        int right = intervals[0][1];
+
         for(int i = 1 ; i < intervals.length ; i ++) {
-            // 情况1，被覆盖
-            if(intervals[i][0] >= left && intervals[i][1] <= right) {
+            int[] t = intervals[i];
+            // 三种情况
+            // 1.完全覆盖
+            if(t[0] >= left && t[1] <= right) {
                 count ++;
-            }
-            // 情况2，相交
-            if(right >= intervals[i][0] && right <= intervals[i][1]) {
-                right = intervals[i][1];
-            }
-            //  情况3，不相交
-            if(right < intervals[i][0]) {
-                left = intervals[i][0];
-                right = intervals[i][1];
+            } else if(t[0] <= right && right <= t[1]) {
+            // 2.相交
+                left = t[0];
+                right = t[1];
+            } else if(t[0] > right) {
+            // 3.完全不相交
+                left = t[0];
+                right = t[1];
             }
         }
+
         return intervals.length - count;
     }
 }
